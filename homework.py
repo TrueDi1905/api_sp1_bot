@@ -12,14 +12,15 @@ load_dotenv()
 PRAKTIKUM_TOKEN = os.getenv("PRAKTIKUM_TOKEN")
 TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
 CHAT_ID = os.getenv('TELEGRAM_CHAT_ID')
-
+bot_client = Bot(token=TELEGRAM_TOKEN)
 
 def parse_homework_status(homework):
     homework_name = homework['homework_name']
     if homework['status'] == 'rejected' and homework['status'] != 'reviewing':
         verdict = 'К сожалению в работе нашлись ошибки.'
     else:
-        verdict = 'Ревьюеру всё понравилось, можно приступать к следующему уроку.'
+        verdict = 'Ревьюеру всё понравилось, ' \
+                  'можно приступать к следующему уроку.'
     return f'У вас проверили работу "{homework_name}"!\n\n{verdict}'
 
 
@@ -46,15 +47,16 @@ def send_message(message, bot_client):
 
 
 def main():
-    bot_client = Bot(token=TELEGRAM_TOKEN)
     current_timestamp = int(time.time())
 
     while True:
         try:
             new_homework = get_homework_statuses(current_timestamp)
             if new_homework.get('homeworks'):
-                send_message(parse_homework_status(new_homework.get('homeworks')[0]))
-            current_timestamp = new_homework.get('current_date', current_timestamp)
+                send_message(parse_homework_status(
+                    new_homework.get('homeworks')[0]))
+            current_timestamp = new_homework.get(
+                'current_date', current_timestamp)
             time.sleep(1200)
 
         except Exception as e:
