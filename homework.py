@@ -14,6 +14,7 @@ TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
 CHAT_ID = os.getenv('TELEGRAM_CHAT_ID')
 bot_client = Bot(token=TELEGRAM_TOKEN)
 
+
 def parse_homework_status(homework):
     homework_name = homework['homework_name']
     if homework['status'] == 'rejected' and homework['status'] != 'reviewing':
