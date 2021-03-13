@@ -7,7 +7,10 @@ from dotenv import load_dotenv
 from telegram import Bot
 
 load_dotenv()
-
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='%(asctime)s, %(levelname)s, %(name)s, %(message)s',
+    filename='main.log', filemode='w')
 
 PRAKTIKUM_TOKEN = os.getenv("PRAKTIKUM_TOKEN")
 TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
@@ -19,7 +22,7 @@ def parse_homework_status(homework):
     homework_name = homework['homework_name']
     if homework['status'] == 'rejected' and homework['status'] != 'reviewing':
         verdict = 'К сожалению в работе нашлись ошибки.'
-    else:
+    elif homework['status'] == 'approved':
         verdict = 'Ревьюеру всё понравилось, ' \
                   'можно приступать к следующему уроку.'
     return f'У вас проверили работу "{homework_name}"!\n\n{verdict}'
@@ -35,33 +38,25 @@ def get_homework_statuses(current_timestamp):
 
 
 def send_message(message, bot_client):
-    logging.basicConfig(
-        level=logging.INFO,
-        format='%(asctime)s, %(levelname)s, %(name)s, %(message)s',
-        filename='setup.cfg', filemode='w')
-    logging.debug('Запущено')
     logging.info('Сообщение отправлено')
-    logging.warning('Большая нагрузка, хелп')
-    logging.error('Бот не смог отправить сообщение')
-    logging.critical('Всё упало! Зовите админа!1!111')
     return bot_client.send_message(chat_id=CHAT_ID, text=message)
 
 
 def main():
     current_timestamp = int(time.time())
-
     while True:
         try:
+            logging.debug('Запущено')
             new_homework = get_homework_statuses(current_timestamp)
             if new_homework.get('homeworks'):
                 send_message(parse_homework_status(
                     new_homework.get('homeworks')[0]))
             current_timestamp = new_homework.get(
                 'current_date', current_timestamp)
-            time.sleep(1200)
+            time.sleep(300)
 
         except Exception as e:
-            print(f'Бот столкнулся с ошибкой: {e}')
+            logging.error(f'Бот столкнулся с ошибкой: {e}')
             time.sleep(5)
 
 

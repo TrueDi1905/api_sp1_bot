@@ -1,0 +1,6 @@
+2021-03-13 20:22:03,388, DEBUG, telegram.bot, Entering: send_message
+2021-03-13 20:22:03,388, DEBUG, telegram.vendor.ptb_urllib3.urllib3.connectionpool, Starting new HTTPS connection (1): api.telegram.org
+2021-03-13 20:22:03,842, DEBUG, telegram.vendor.ptb_urllib3.urllib3.connectionpool, https://api.telegram.org:443 "POST /bot1553135137:AAFNx4CqYSfuEOm01pgE5kUIZqcIwckbu0I/sendMessage HTTP/1.1" 200 443
+2021-03-13 20:22:03,843, DEBUG, telegram.bot, {'message_id': 166, 'date': 1615656125, 'chat': {'id': 838295267, 'type': 'private', 'username': 'DmitriyAgafonov1905', 'first_name': 'Дмитрий', 'last_name': 'Агафонов'}, 'text': 'ты хуй', 'entities': [], 'caption_entities': [], 'photo': [], 'new_chat_members': [], 'new_chat_photo': [], 'delete_chat_photo': False, 'group_chat_created': False, 'supergroup_chat_created': False, 'channel_chat_created': False, 'from': {'id': 1553135137, 'first_name': 'ЛапкиКотята', 'is_bot': True, 'username': 'LapkiKotyatabot'}}
+2021-03-13 20:22:03,844, DEBUG, telegram.bot, Exiting: send_message
+2021-03-13 20:22:03,844, DEBUG, root, Запущено
