@@ -20,11 +20,15 @@ bot_client = Bot(token=TELEGRAM_TOKEN)
 
 def parse_homework_status(homework):
     homework_name = homework['homework_name']
-    if homework['status'] == 'rejected' and homework['status'] != 'reviewing':
+    if homework['status'] == 'rejected':
         verdict = 'К сожалению в работе нашлись ошибки.'
     elif homework['status'] == 'approved':
         verdict = 'Ревьюеру всё понравилось, ' \
                   'можно приступать к следующему уроку.'
+    elif homework['status'] == 'reviewing':
+        verdict = 'работа взята в ревью'
+    else:
+        verdict = 'Сервер присалал неизветный ответ'
     return f'У вас проверили работу "{homework_name}"!\n\n{verdict}'
 
 
